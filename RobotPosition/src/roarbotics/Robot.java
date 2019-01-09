@@ -1,5 +1,6 @@
 package roarbotics;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -14,6 +15,7 @@ public class Robot extends JComponent {
 	private double ay = 0;
 
 	private double leftEnc;
+	private double rightEnc;
 
 	public Robot() {
 
@@ -26,8 +28,6 @@ public class Robot extends JComponent {
 	public void setRightEnc(double rightEnc) {
 		this.rightEnc = rightEnc;
 	}
-
-	private double rightEnc;
 
 	public void setX(double x) {
 		this.x = x;
@@ -52,7 +52,9 @@ public class Robot extends JComponent {
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 
+		g2.setColor(Color.RED);
 		g2.drawOval((int) x, (int) y, 10, 10);
+		g2.drawLine((int) x, (int) y, (int) (x + ax), (int) (y + ay));
 	}
 
 }
