@@ -7,15 +7,27 @@ import javax.swing.JComponent;
 
 public class Robot extends JComponent {
 
-	double x = 0;
-	double y = 0;
-	double angle = 0;
-	double ax = 0;
-	double ay = 0;
+	private double x = 0;
+	private double y = 0;
+	private double angle = 0;
+	private double ax = 0;
+	private double ay = 0;
+
+	private double leftEnc;
 
 	public Robot() {
 
 	}
+
+	public void setLeftEnc(double leftEnc) {
+		this.leftEnc = leftEnc;
+	}
+
+	public void setRightEnc(double rightEnc) {
+		this.rightEnc = rightEnc;
+	}
+
+	private double rightEnc;
 
 	public void setX(double x) {
 		this.x = x;

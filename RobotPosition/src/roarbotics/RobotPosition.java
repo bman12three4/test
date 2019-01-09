@@ -25,6 +25,9 @@ public class RobotPosition {
 	NetworkTableEntry yGyroEntry;
 	NetworkTableEntry angleGyroEntry;
 
+	NetworkTableEntry xRioEntry;
+	NetworkTableEntry yRioEntry;
+
 	NetworkTableEntry leftEncoderEntry;
 	NetworkTableEntry rightEncoderEntry;
 
@@ -33,7 +36,7 @@ public class RobotPosition {
 	Timer t;
 
 	JComboBox<Position> startingPos;
-	
+
 	Robot robot;
 
 	class Position {
@@ -108,19 +111,18 @@ public class RobotPosition {
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
-
 		panel = new FieldPanel();
 		panel.setBounds(0, 0, 400, 600);
 		panel.setBackground(Color.BLUE);
 		frame.getContentPane().add(panel);
 		frame.repaint();
-		
+
 		startingPos = new JComboBox<>();
 		startingPos.addItem(new Position("Left", 100, 500, 0));
 		startingPos.addItem(new Position("Center", 200, 500, 0));
 		startingPos.addItem(new Position("Right", 300, 500, 0));
 		panel.add(startingPos);
-		
+
 		robot = new Robot();
 		panel.add(robot);
 
@@ -140,6 +142,28 @@ public class RobotPosition {
 				double xMXP = xMXPEntry.getDouble(startX);
 				double yMXP = yMXPEntry.getDouble(startY);
 				double angleMXP = angleMXPEntry.getDouble(startAngle);
+
+				double xGyro = xGyroEntry.getDouble(0);
+				double yGyro = yGyroEntry.getDouble(0);
+				double angleGyro = angleGyroEntry.getDouble(0);
+
+				double xRio = xRioEntry.getDouble(0);
+				double yRio = yRioEntry.getDouble(0);
+
+				double leftEncoder = leftEncoderEntry.getDouble(0);
+				double rightEncoder = rightEncoderEntry.getDouble(0);
+
+				robot.setAx((xGyro + xRio) / 2);
+				robot.setAy((yGyro + yRio) / 2);
+
+				robot.setAngle((angleMXP + angleGyro) / 2);
+
+				robot.setX(xMXP);
+				robot.setY(yMXP);
+
+				robot.setLeftEnc(leftEncoder);
+				robot.setRightEnc(rightEncoder);
+
 			}
 		});
 
@@ -151,6 +175,8 @@ public class RobotPosition {
 		angleMXPEntry = table.getEntry("angleMXP");
 		xGyroEntry = table.getEntry("xGyro");
 		yGyroEntry = table.getEntry("yGyro");
+		xRioEntry = table.getEntry("xRio");
+		yRioEntry = table.getEntry("yRio");
 		angleGyroEntry = table.getEntry("angleGyro");
 		leftEncoderEntry = table.getEntry("leftEnc");
 		rightEncoderEntry = table.getEntry("rightEnc");
