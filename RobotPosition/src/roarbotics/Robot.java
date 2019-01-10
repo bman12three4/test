@@ -3,10 +3,15 @@ package roarbotics;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JComponent;
 
 public class Robot extends JComponent {
+
+	Image dozer;
+	Toolkit t;
 
 	private double x = 100;
 	private double y = 500;
@@ -19,6 +24,9 @@ public class Robot extends JComponent {
 
 	public Robot() {
 		setSize(10, 10);
+		t = Toolkit.getDefaultToolkit();
+		dozer = t.getImage("img/dozer.png");
+		dozer = dozer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 	}
 
 	public void setPos(double x, double y, double angle) {
@@ -58,11 +66,11 @@ public class Robot extends JComponent {
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
-		
-		
+
 		g2.setColor(Color.RED);
-		g2.fillOval((int) x, (int) y, 20, 20);
-		g2.drawLine((int) x + 10, (int) y+ 10, (int) (x + ax + 10), (int) (y + ay + 10));
+		//g2.fillOval((int) x, (int) y, 20, 20);
+		g2.drawImage(dozer, (int) x, (int) y, this);
+		g2.drawLine((int) x + 10, (int) y + 10, (int) (x + ax + 10), (int) (y + ay + 10));
 	}
 
 }
