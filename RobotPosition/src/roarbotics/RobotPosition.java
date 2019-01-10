@@ -1,6 +1,5 @@
 package roarbotics;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +29,7 @@ public class RobotPosition {
 
 	NetworkTableEntry leftEncoderEntry;
 	NetworkTableEntry rightEncoderEntry;
+	
 
 	FieldPanel panel;
 
@@ -94,6 +94,7 @@ public class RobotPosition {
 	public RobotPosition() {
 		initialize();
 		frame.setVisible(true);
+		frame.repaint();
 		t.start();
 	}
 
@@ -113,56 +114,79 @@ public class RobotPosition {
 
 		panel = new FieldPanel();
 		panel.setBounds(0, 0, 400, 600);
-		panel.setBackground(Color.BLUE);
-		frame.getContentPane().add(panel);
-		frame.repaint();
+
+		robot = new Robot();
+		robot.setSize(panel.getWidth(), panel.getHeight());
+		panel.add(robot);
 
 		startingPos = new JComboBox<>();
 		startingPos.addItem(new Position("Left", 100, 500, 0));
 		startingPos.addItem(new Position("Center", 200, 500, 0));
 		startingPos.addItem(new Position("Right", 300, 500, 0));
-		panel.add(startingPos);
+		startingPos.setBounds(150, 5, 100, 25);
 
-		robot = new Robot();
-		panel.add(robot);
-
-		System.out.println("added panel");
-
-		t = new Timer(10, new ActionListener() {
+		startingPos.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException ex) {
-					System.out.println("interrupted");
-					return;
-				}
+				double x = ((Position) startingPos.getSelectedItem()).x;
+				double y = ((Position) startingPos.getSelectedItem()).y;
+				double angle = ((Position) startingPos.getSelectedItem()).angle;
 
-				double xMXP = xMXPEntry.getDouble(startX);
-				double yMXP = yMXPEntry.getDouble(startY);
-				double angleMXP = angleMXPEntry.getDouble(startAngle);
+				robot.setPos(x, y, angle);
 
-				double xGyro = xGyroEntry.getDouble(0);
-				double yGyro = yGyroEntry.getDouble(0);
-				double angleGyro = angleGyroEntry.getDouble(0);
+				frame.repaint();
+				robot.repaint();
+			}
+		});
+		// panel.add(startingPos);
 
-				double xRio = xRioEntry.getDouble(0);
-				double yRio = yRioEntry.getDouble(0);
+		// frame.add(panel);
+		// frame.getContentPane().add(startingPos);
+		// frame.getContentPane().add(panel);
+		// panel.add(robot);
+		frame.add(robot);
+		frame.add(startingPos);
+		// frame.add(robot);
+		// panel.repaint();
+		frame.repaint();
+		panel.repaint();
 
-				double leftEncoder = leftEncoderEntry.getDouble(0);
-				double rightEncoder = rightEncoderEntry.getDouble(0);
+		// robot = new Robot();
+		// panel.add(robot);
 
-				robot.setAx((xGyro + xRio) / 2);
-				robot.setAy((yGyro + yRio) / 2);
+		t = new Timer(1, new ActionListener() {
 
-				robot.setAngle((angleMXP + angleGyro) / 2);
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-				robot.setX(xMXP);
-				robot.setY(yMXP);
+				/*
+				 * double xMXP = xMXPEntry.getDouble(startX); double yMXP =
+				 * yMXPEntry.getDouble(startY); double angleMXP =
+				 * angleMXPEntry.getDouble(startAngle);
+				 * 
+				 * double xGyro = xGyroEntry.getDouble(0); double yGyro =
+				 * yGyroEntry.getDouble(0); double angleGyro = angleGyroEntry.getDouble(0);
+				 * 
+				 * double xRio = xRioEntry.getDouble(0); double yRio = yRioEntry.getDouble(0);
+				 * 
+				 * double leftEncoder = leftEncoderEntry.getDouble(0); double rightEncoder =
+				 * rightEncoderEntry.getDouble(0);
+				 */
 
-				robot.setLeftEnc(leftEncoder);
-				robot.setRightEnc(rightEncoder);
+				robot.setAx(8);// (xGyro + xRio) / 2);
+				robot.setAy(32);// (yGyro + yRio) / 2);
+
+//				robot.setAngle((angleMXP + angleGyro) / 2);
+
+				robot.setX(123);// xMXP);
+				robot.setY(76);// yMXP);
+
+//				robot.setLeftEnc(leftEncoder);
+//				robot.setRightEnc(rightEncoder);
+
+				// panel.repaint();
+				robot.repaint();
 
 			}
 		});
@@ -180,6 +204,8 @@ public class RobotPosition {
 		angleGyroEntry = table.getEntry("angleGyro");
 		leftEncoderEntry = table.getEntry("leftEnc");
 		rightEncoderEntry = table.getEntry("rightEnc");
+		
+		NetworkTable fms = inst.getTable("FMSInfo");
 
 		inst.startClientTeam(5482);
 		inst.startDSClient();
