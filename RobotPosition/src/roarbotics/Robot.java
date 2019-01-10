@@ -62,7 +62,7 @@ public class Robot extends JComponent {
 		
 		g2.setColor(Color.RED);
 		g2.fillOval((int) x, (int) y, 20, 20);
-		g2.drawLine((int) x, (int) y, (int) (x + ax), (int) (y + ay));
+		g2.drawLine((int) x + 10, (int) y+ 10, (int) (x + ax + 10), (int) (y + ay + 10));
 	}
 
 }

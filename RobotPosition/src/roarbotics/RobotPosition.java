@@ -8,9 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class RobotPosition {
 
@@ -29,7 +27,15 @@ public class RobotPosition {
 
 	NetworkTableEntry leftEncoderEntry;
 	NetworkTableEntry rightEncoderEntry;
-	
+
+	NetworkTableEntry gameSpecificMessage;
+	NetworkTableEntry eventName;
+	NetworkTableEntry matchNumber;
+	NetworkTableEntry replayNumber;
+	NetworkTableEntry matchType;
+	NetworkTableEntry alliance;
+	NetworkTableEntry station;
+	NetworkTableEntry controlWord;
 
 	FieldPanel panel;
 
@@ -174,8 +180,8 @@ public class RobotPosition {
 				 * rightEncoderEntry.getDouble(0);
 				 */
 
-				robot.setAx(8);// (xGyro + xRio) / 2);
-				robot.setAy(32);// (yGyro + yRio) / 2);
+				robot.setAx(50);// (xGyro + xRio) / 2);
+				robot.setAy(0);// (yGyro + yRio) / 2);
 
 //				robot.setAngle((angleMXP + angleGyro) / 2);
 
@@ -191,24 +197,27 @@ public class RobotPosition {
 			}
 		});
 
-		NetworkTableInstance inst = NetworkTableInstance.getDefault();
-		NetworkTable table = inst.getTable("datatable");
-
-		yMXPEntry = table.getEntry("xMXP");
-		yMXPEntry = table.getEntry("yMXP");
-		angleMXPEntry = table.getEntry("angleMXP");
-		xGyroEntry = table.getEntry("xGyro");
-		yGyroEntry = table.getEntry("yGyro");
-		xRioEntry = table.getEntry("xRio");
-		yRioEntry = table.getEntry("yRio");
-		angleGyroEntry = table.getEntry("angleGyro");
-		leftEncoderEntry = table.getEntry("leftEnc");
-		rightEncoderEntry = table.getEntry("rightEnc");
-		
-		NetworkTable fms = inst.getTable("FMSInfo");
-
-		inst.startClientTeam(5482);
-		inst.startDSClient();
+		/*
+		 * NetworkTableInstance inst = NetworkTableInstance.getDefault(); NetworkTable
+		 * table = inst.getTable("datatable");
+		 * 
+		 * yMXPEntry = table.getEntry("xMXP"); yMXPEntry = table.getEntry("yMXP");
+		 * angleMXPEntry = table.getEntry("angleMXP"); xGyroEntry =
+		 * table.getEntry("xGyro"); yGyroEntry = table.getEntry("yGyro"); xRioEntry =
+		 * table.getEntry("xRio"); yRioEntry = table.getEntry("yRio"); angleGyroEntry =
+		 * table.getEntry("angleGyro"); leftEncoderEntry = table.getEntry("leftEnc");
+		 * rightEncoderEntry = table.getEntry("rightEnc");
+		 * 
+		 * NetworkTable fms = inst.getTable("FMSInfo");
+		 * 
+		 * gameSpecificMessage = fms.getEntry("GameSpecificMessage"); eventName =
+		 * fms.getEntry("EvenName"); matchNumber = fms.getEntry("MatchNumber");
+		 * matchType = fms.getEntry("MatchType"); alliance =
+		 * fms.getEntry("IsRedAlliance"); station = fms.getEntry("StationNumber");
+		 * controlWord = fms.getEntry("FMSControlData");
+		 * 
+		 * inst.startClientTeam(5482); inst.startDSClient();
+		 */
 
 	}
 
