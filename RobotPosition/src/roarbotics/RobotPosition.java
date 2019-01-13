@@ -1,8 +1,11 @@
 package roarbotics;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -39,7 +42,7 @@ public class RobotPosition {
 	NetworkTableEntry station;
 	NetworkTableEntry controlWord;
 
-	FieldPanel panel;
+	public static Field field;
 
 	Timer t;
 
@@ -103,7 +106,7 @@ public class RobotPosition {
 		initialize();
 		frame.setVisible(true);
 		frame.repaint();
-		t.start();
+		//t.start();
 	}
 
 	/**
@@ -120,18 +123,17 @@ public class RobotPosition {
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
-		panel = new FieldPanel();
-		panel.setBounds(0, 0, 400, 600);
+		field = new Field();
+		field.setSize(500, 700);
 
 		robot = new Robot();
-		robot.setSize(panel.getWidth(), panel.getHeight());
-		panel.add(robot);
+		robot.setSize(field.getWidth(), field.getHeight());
 
 		startingPos = new JComboBox<>();
 		startingPos.addItem(new Position("Left", 100, 500, 0));
 		startingPos.addItem(new Position("Center", 200, 500, 0));
 		startingPos.addItem(new Position("Right", 300, 500, 0));
-		startingPos.setBounds(150, 5, 100, 25);
+		startingPos.setBounds(200, 5, 100, 25);
 
 		startingPos.addActionListener(new ActionListener() {
 
@@ -147,11 +149,13 @@ public class RobotPosition {
 				robot.repaint();
 			}
 		});
+		
+		field.isRed = true;
 
 		frame.add(robot);
 		frame.add(startingPos);
+		frame.add(field);
 		frame.repaint();
-		panel.repaint();
 
 		// robot = new Robot();
 		// panel.add(robot);
@@ -175,22 +179,20 @@ public class RobotPosition {
 				 * rightEncoderEntry.getDouble(0);
 				 */
 
-				robot.setAx(50);// (xGyro + xRio) / 2);
-				robot.setAy(0);// (yGyro + yRio) / 2);
-
 //				robot.setAngle((angleMXP + angleGyro) / 2);
 
-				robot.setX(123);// xMXP);
-				robot.setY(76);// yMXP);
+//				robot.setX(xMXP);
+//				robot.setY(yMXP);
 
 //				robot.setLeftEnc(leftEncoder);
 //				robot.setRightEnc(rightEncoder);
 
-				// panel.repaint();
+				field.repaint();
 				robot.repaint();
 
 			}
 		});
+		
 
 		NetworkTableInstance inst = NetworkTableInstance.getDefault();
 		NetworkTable table = inst.getTable("datatable");

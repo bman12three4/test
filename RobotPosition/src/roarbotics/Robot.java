@@ -62,11 +62,11 @@ public class Robot extends JComponent {
 	public void setAy(double ay) {
 		this.ay = ay;
 	}
-	
+
 	public double getXPos() {
 		return x;
 	}
-	
+
 	public double getYPos() {
 		return y;
 	}
@@ -75,8 +75,10 @@ public class Robot extends JComponent {
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
 
-		g2.setColor(Color.RED);
-		//g2.fillOval((int) x, (int) y, 20, 20);
+		g2.setColor(Color.BLUE);
+		if (RobotPosition.field.isRed)
+			g2.setColor(Color.RED);
+		g2.fillOval((int) x - 5, (int) y - 5, 40, 40);
 		g2.drawImage(dozer, (int) x, (int) y, this);
 		g2.drawLine((int) x + 10, (int) y + 10, (int) (x + ax + 10), (int) (y + ay + 10));
 	}
