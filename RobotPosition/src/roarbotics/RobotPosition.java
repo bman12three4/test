@@ -161,9 +161,12 @@ public class RobotPosition {
 		robot.setSize(field.getWidth(), field.getHeight());
 
 		startingPos = new JComboBox<>();
-		startingPos.addItem(new Position("Left", 100, 500, 0));
-		startingPos.addItem(new Position("Center", 200, 500, 0));
-		startingPos.addItem(new Position("Right", 300, 500, 0));
+		startingPos.addItem(new Position("Forward Left", 175, 605, 0));
+		startingPos.addItem(new Position("Forward Center", 235, 605, 0));
+		startingPos.addItem(new Position("Forward Right", 295, 605, 0));
+		startingPos.addItem(new Position("Rear Left", 175, 645, 0));
+		startingPos.addItem(new Position("Rear Center", 235, 645, 0));
+		startingPos.addItem(new Position("Rear Right", 295, 645, 0));
 		startingPos.setBounds(200, 5, 100, 25);
 
 		startingPos.addActionListener(new ActionListener() {

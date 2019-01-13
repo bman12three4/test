@@ -31,7 +31,6 @@ public class Field extends JComponent {
 
 	public void paint(Graphics g) {
 		super.paint(g);
-		System.out.println("drawing frame");
 
 		Graphics2D g2 = (Graphics2D) g;
 

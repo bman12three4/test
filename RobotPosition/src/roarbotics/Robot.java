@@ -13,8 +13,8 @@ public class Robot extends JComponent {
 	Image dozer;
 	Toolkit t;
 
-	private double x = 100;
-	private double y = 500;
+	private double x = 175;
+	private double y = 605;
 	private double angle = 0;
 	private double ax = 0;
 	private double ay = 0;
