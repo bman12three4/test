@@ -10,6 +10,10 @@ import javax.swing.JComponent;
 
 public class Field extends JComponent {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 379092475697268476L;
 	Image field;
 	Toolkit t;
 

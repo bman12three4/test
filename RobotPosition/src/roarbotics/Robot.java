@@ -5,25 +5,25 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.geom.AffineTransform;
 
 import javax.swing.JComponent;
 
 public class Robot extends JComponent {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8495836591046026367L;
 	Image dozer;
 	Toolkit t;
 
 	private double x = 175;
 	private double y = 605;
 	private double angle = 0;
-	private double ax = 0;
-	private double ay = 0;
 
 	private double scaleX = 1;
 	private double scaleY = 1;
-
-	private double leftEnc;
-	private double rightEnc;
 
 	public Robot() {
 		setSize(30, 30);
@@ -38,14 +38,6 @@ public class Robot extends JComponent {
 		this.angle = angle;
 	}
 
-	public void setLeftEnc(double leftEnc) {
-		this.leftEnc = leftEnc;
-	}
-
-	public void setRightEnc(double rightEnc) {
-		this.rightEnc = rightEnc;
-	}
-
 	public void setX(double x) {
 		this.x = x;
 	}
@@ -56,14 +48,6 @@ public class Robot extends JComponent {
 
 	public void setAngle(double angle) {
 		this.angle = angle;
-	}
-
-	public void setAx(double ax) {
-		this.ax = ax;
-	}
-
-	public void setAy(double ay) {
-		this.ay = ay;
 	}
 
 	public double getXPos() {
@@ -82,7 +66,11 @@ public class Robot extends JComponent {
 		if (RobotPosition.getAlliance().getBoolean(false))
 			g2.setColor(Color.RED);
 		g2.fillOval((int) (x * scaleX - 5), (int) (y * scaleY - 5), 40, 40);
+		AffineTransform back = g2.getTransform();
+		g2.setTransform(
+				AffineTransform.getRotateInstance(Math.toRadians(angle), (int) (x * scaleX + 15), (int) (y * scaleY + 15)));
 		g2.drawImage(dozer, (int) (x * scaleX), (int) (y * scaleY), this);
+		g2.setTransform(back);
 	}
 
 }

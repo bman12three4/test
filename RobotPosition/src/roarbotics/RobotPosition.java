@@ -187,6 +187,7 @@ public class RobotPosition {
 		field.isRed = true;
 
 		frame.add(robot);
+		robot.setAngle(180);
 		frame.add(startingPos);
 		frame.add(field);
 		frame.repaint();
