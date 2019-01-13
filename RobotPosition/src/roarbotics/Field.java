@@ -16,13 +16,13 @@ public class Field extends JComponent {
 	AffineTransform a;
 
 	boolean isRed = false;
-	
+
 	public boolean isRed() {
 		return isRed;
 	}
 
 	public Field() {
-		setSize(500,700);
+		setSize(500, 700);
 		t = Toolkit.getDefaultToolkit();
 		field = t.getImage("img/2019-field.png");
 		field = field.getScaledInstance(500, 700, Image.SCALE_SMOOTH);
@@ -32,16 +32,16 @@ public class Field extends JComponent {
 	public void paint(Graphics g) {
 		super.paint(g);
 		System.out.println("drawing frame");
-		
+
 		Graphics2D g2 = (Graphics2D) g;
 
 		AffineTransform back = g2.getTransform();
-		if (isRed) {
+		if (RobotPosition.getAlliance().getValue().getBoolean()) { // See if we are on the red alliance.
 			g2.setTransform(a);
 		}
 		g2.drawImage(field, 0, 0, this);
 		g2.setTransform(back);
-		
+
 	}
 
 }

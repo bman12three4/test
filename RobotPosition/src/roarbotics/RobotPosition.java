@@ -33,14 +33,16 @@ public class RobotPosition {
 	NetworkTableEntry leftEncoderEntry;
 	NetworkTableEntry rightEncoderEntry;
 
-	NetworkTableEntry gameSpecificMessage;
-	NetworkTableEntry eventName;
-	NetworkTableEntry matchNumber;
-	NetworkTableEntry replayNumber;
-	NetworkTableEntry matchType;
-	NetworkTableEntry alliance;
-	NetworkTableEntry station;
-	NetworkTableEntry controlWord;
+	static NetworkTableEntry gameSpecificMessage;
+	static NetworkTableEntry eventName;
+	static NetworkTableEntry matchNumber;
+	static NetworkTableEntry replayNumber;
+	static NetworkTableEntry matchType;
+	static NetworkTableEntry alliance;
+	static NetworkTableEntry station;
+	static NetworkTableEntry controlWord;
+
+	RobotPosition window;
 
 	public static Field field;
 
@@ -49,6 +51,38 @@ public class RobotPosition {
 	JComboBox<Position> startingPos;
 
 	Robot robot;
+
+	public static NetworkTableEntry getGameSpecificMessage() {
+		return gameSpecificMessage;
+	}
+
+	public static NetworkTableEntry getEventName() {
+		return eventName;
+	}
+
+	public static NetworkTableEntry getMatchNumber() {
+		return matchNumber;
+	}
+
+	public static NetworkTableEntry getReplayNumber() {
+		return replayNumber;
+	}
+
+	public static NetworkTableEntry getMatchType() {
+		return matchType;
+	}
+
+	public static NetworkTableEntry getAlliance() {
+		return alliance;
+	}
+
+	public static NetworkTableEntry getStation() {
+		return station;
+	}
+
+	public static NetworkTableEntry getControlWord() {
+		return controlWord;
+	}
 
 	class Position {
 
@@ -106,7 +140,7 @@ public class RobotPosition {
 		initialize();
 		frame.setVisible(true);
 		frame.repaint();
-		//t.start();
+		// t.start();
 	}
 
 	/**
@@ -149,7 +183,7 @@ public class RobotPosition {
 				robot.repaint();
 			}
 		});
-		
+
 		field.isRed = true;
 
 		frame.add(robot);
@@ -192,7 +226,6 @@ public class RobotPosition {
 
 			}
 		});
-		
 
 		NetworkTableInstance inst = NetworkTableInstance.getDefault();
 		NetworkTable table = inst.getTable("datatable");
