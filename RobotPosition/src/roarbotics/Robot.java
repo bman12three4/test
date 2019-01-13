@@ -23,7 +23,7 @@ public class Robot extends JComponent {
 	private double rightEnc;
 
 	public Robot() {
-		setSize(10, 10);
+		setSize(30, 30);
 		t = Toolkit.getDefaultToolkit();
 		dozer = t.getImage("img/dozer.png");
 		dozer = dozer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -61,6 +61,14 @@ public class Robot extends JComponent {
 
 	public void setAy(double ay) {
 		this.ay = ay;
+	}
+	
+	public double getXPos() {
+		return x;
+	}
+	
+	public double getYPos() {
+		return y;
 	}
 
 	public void paint(Graphics g) {
