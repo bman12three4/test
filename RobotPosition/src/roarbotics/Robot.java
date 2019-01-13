@@ -76,7 +76,7 @@ public class Robot extends JComponent {
 		Graphics2D g2 = (Graphics2D) g;
 
 		g2.setColor(Color.BLUE);
-		if (RobotPosition.getAlliance().getValue().getBoolean())
+		if (RobotPosition.getAlliance().getBoolean(false))
 			g2.setColor(Color.RED);
 		g2.fillOval((int) x - 5, (int) y - 5, 40, 40);
 		g2.drawImage(dozer, (int) x, (int) y, this);

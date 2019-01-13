@@ -36,7 +36,7 @@ public class Field extends JComponent {
 		Graphics2D g2 = (Graphics2D) g;
 
 		AffineTransform back = g2.getTransform();
-		if (RobotPosition.getAlliance().getValue().getBoolean()) { // See if we are on the red alliance.
+		if (RobotPosition.getAlliance().getBoolean(false)) { // See if we are on the red alliance.
 			g2.setTransform(a);
 		}
 		g2.drawImage(field, 0, 0, this);
