@@ -19,6 +19,9 @@ public class Robot extends JComponent {
 	private double ax = 0;
 	private double ay = 0;
 
+	private double scaleX = 1;
+	private double scaleY = 1;
+
 	private double leftEnc;
 	private double rightEnc;
 
@@ -78,9 +81,8 @@ public class Robot extends JComponent {
 		g2.setColor(Color.BLUE);
 		if (RobotPosition.getAlliance().getBoolean(false))
 			g2.setColor(Color.RED);
-		g2.fillOval((int) x - 5, (int) y - 5, 40, 40);
-		g2.drawImage(dozer, (int) x, (int) y, this);
-		g2.drawLine((int) x + 10, (int) y + 10, (int) (x + ax + 10), (int) (y + ay + 10));
+		g2.fillOval((int) (x * scaleX - 5), (int) (y * scaleY - 5), 40, 40);
+		g2.drawImage(dozer, (int) (x * scaleX), (int) (y * scaleY), this);
 	}
 
 }
