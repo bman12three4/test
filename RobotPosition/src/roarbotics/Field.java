@@ -29,7 +29,7 @@ public class Field extends JComponent {
 	public Field() {
 		setSize(500, 700);
 		t = Toolkit.getDefaultToolkit();
-		field = t.getImage("img/2019-field.png");
+		field = t.getImage("src/img/2019-field.png");
 		field = field.getScaledInstance(500, 700, Image.SCALE_SMOOTH);
 		a = AffineTransform.getRotateInstance(Math.toRadians(180), 250, 350);
 	}

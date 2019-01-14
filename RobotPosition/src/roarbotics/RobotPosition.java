@@ -210,7 +210,7 @@ public class RobotPosition {
 
 		// Testing. This is used to set the default value for the alliance. If a
 		// connection the the FMS is made then this does not matter.
-		field.isRed = true;
+		field.isRed = false;
 
 		/**
 		 * Add all objects to the frame.

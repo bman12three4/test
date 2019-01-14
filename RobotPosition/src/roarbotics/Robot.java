@@ -38,9 +38,9 @@ public class Robot extends JComponent {
 	public Robot() {
 		setSize(30, 30);
 		t = Toolkit.getDefaultToolkit();
-		dozer = t.getImage("img/dozer.png");
+		dozer = t.getImage("src/img/dozer.png");
 		dozer = dozer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-		flip_dozer = t.getImage("img/flip_dozer.png");
+		flip_dozer = t.getImage("src/img/flip_dozer.png");
 		flip_dozer = flip_dozer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		setAngle(angle);
 	}
