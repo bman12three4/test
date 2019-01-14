@@ -16,6 +16,8 @@ public class Robot extends JComponent {
 	 */
 	private static final long serialVersionUID = 8495836591046026367L;
 	Image dozer;
+	Image flip_dozer;
+	Image print_dozer = dozer;
 	Toolkit t;
 
 	private double x = 175;
@@ -25,11 +27,16 @@ public class Robot extends JComponent {
 	private double scaleX = 1;
 	private double scaleY = 1;
 
+	AffineTransform rotate  = AffineTransform.getRotateInstance(Math.toRadians(angle), (int) (x * scaleX + 15), (int) ( y*scaleY + 15));;
+
 	public Robot() {
 		setSize(30, 30);
 		t = Toolkit.getDefaultToolkit();
 		dozer = t.getImage("img/dozer.png");
 		dozer = dozer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		flip_dozer = t.getImage("img/flip_dozer.png");
+		flip_dozer = flip_dozer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		setAngle(angle);
 	}
 
 	public void setPos(double x, double y, double angle) {
@@ -48,6 +55,7 @@ public class Robot extends JComponent {
 
 	public void setAngle(double angle) {
 		this.angle = angle;
+		rotateImage();
 	}
 
 	public double getXPos() {
@@ -56,6 +64,19 @@ public class Robot extends JComponent {
 
 	public double getYPos() {
 		return y;
+	}
+
+	private void rotateImage() {
+		System.out.println("Running rotateImage");
+		double cappedAngle = angle % 360;
+		if (cappedAngle > 90 && cappedAngle < 270) {
+			print_dozer = flip_dozer;
+			System.out.println("using flip_dozer");
+		} else {
+			System.out.println("using regular dozer");
+			print_dozer = dozer;
+		}
+		rotate = AffineTransform.getRotateInstance(Math.toRadians(angle), (int) (x * scaleX + 15), (int) ( y*scaleY + 15));
 	}
 
 	public void paint(Graphics g) {
@@ -67,9 +88,8 @@ public class Robot extends JComponent {
 			g2.setColor(Color.RED);
 		g2.fillOval((int) (x * scaleX - 5), (int) (y * scaleY - 5), 40, 40);
 		AffineTransform back = g2.getTransform();
-		g2.setTransform(
-				AffineTransform.getRotateInstance(Math.toRadians(angle), (int) (x * scaleX + 15), (int) (y * scaleY + 15)));
-		g2.drawImage(dozer, (int) (x * scaleX), (int) (y * scaleY), this);
+		g2.setTransform(rotate);
+		g2.drawImage(print_dozer, (int) (x * scaleX), (int) (y * scaleY), this);
 		g2.setTransform(back);
 	}
 

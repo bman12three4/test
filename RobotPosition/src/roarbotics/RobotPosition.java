@@ -116,6 +116,8 @@ public class RobotPosition {
 	double startX = 0;
 	double startY = 0;
 	double startAngle = 0;
+	
+	double angle = 0;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -137,7 +139,7 @@ public class RobotPosition {
 		initialize();
 		frame.setVisible(true);
 		frame.repaint();
-		// t.start();
+		t.start();
 	}
 
 	/**
@@ -187,15 +189,15 @@ public class RobotPosition {
 		field.isRed = true;
 
 		frame.add(robot);
-		robot.setAngle(180);
 		frame.add(startingPos);
 		frame.add(field);
 		frame.repaint();
 
 		// robot = new Robot();
 		// panel.add(robot);
+		
 
-		t = new Timer(1, new ActionListener() {
+		t = new Timer(10, new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -221,6 +223,8 @@ public class RobotPosition {
 
 //				robot.setLeftEnc(leftEncoder);
 //				robot.setRightEnc(rightEncoder);
+				
+				//robot.setAngle(angle++);
 
 				field.repaint();
 				robot.repaint();
