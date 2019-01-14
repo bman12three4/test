@@ -81,6 +81,13 @@ public class RobotPosition {
 		return controlWord;
 	}
 
+	/**
+	 * The Position class stores an x and y coordinate and an angle. Used for
+	 * storing positions of the Robot.
+	 * 
+	 * @author byron.lathi
+	 *
+	 */
 	class Position {
 
 		String name;
@@ -116,7 +123,7 @@ public class RobotPosition {
 	double startX = 0;
 	double startY = 0;
 	double startAngle = 0;
-	
+
 	double angle = 0;
 
 	public static void main(String[] args) {
@@ -156,12 +163,23 @@ public class RobotPosition {
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
+		/**
+		 * Create the new field object and set the size to the same as the frame.
+		 */
 		field = new Field();
-		field.setSize(500, 700);
+		field.setSize(frame.getWidth(), frame.getHeight());
 
+		/**
+		 * create a new robot object which is also the size of the frame for some reason
+		 */
 		robot = new Robot();
 		robot.setSize(field.getWidth(), field.getHeight());
 
+		/**
+		 * Create the list of possible starting positions for the robot. Make sure not
+		 * to change this while the match is ongoing because it will move the robot back
+		 * to the starting line. Maybe something to fix in the future.
+		 */
 		startingPos = new JComboBox<>();
 		startingPos.addItem(new Position("Forward Left", 175, 605, 0));
 		startingPos.addItem(new Position("Forward Center", 235, 605, 0));
@@ -171,6 +189,10 @@ public class RobotPosition {
 		startingPos.addItem(new Position("Rear Right", 295, 645, 0));
 		startingPos.setBounds(200, 5, 100, 25);
 
+		/**
+		 * Action listener for the combobox, basically just send the position to the
+		 * robot.
+		 */
 		startingPos.addActionListener(new ActionListener() {
 
 			@Override
@@ -186,8 +208,13 @@ public class RobotPosition {
 			}
 		});
 
+		// Testing. This is used to set the default value for the alliance. If a
+		// connection the the FMS is made then this does not matter.
 		field.isRed = true;
 
+		/**
+		 * Add all objects to the frame.
+		 */
 		frame.add(robot);
 		frame.add(startingPos);
 		frame.add(field);
@@ -195,9 +222,14 @@ public class RobotPosition {
 
 		// robot = new Robot();
 		// panel.add(robot);
-		
 
-		t = new Timer(10, new ActionListener() {
+		/**
+		 * main loop. This runs at 20Hz, the same as NetworkTables. It is possible to go
+		 * faster but it hasn't been done yet. Inside the main loop, all the values are
+		 * gotten from the NetworkTables and sent to the robot object to tell it where
+		 * to go.
+		 */
+		t = new Timer(5, new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -223,8 +255,8 @@ public class RobotPosition {
 
 //				robot.setLeftEnc(leftEncoder);
 //				robot.setRightEnc(rightEncoder);
-				
-				//robot.setAngle(angle++);
+
+				// robot.setAngle(angle++);
 
 				field.repaint();
 				robot.repaint();

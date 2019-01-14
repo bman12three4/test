@@ -21,10 +21,11 @@ public class Field extends JComponent {
 
 	boolean isRed = false;
 
-	public boolean isRed() {
-		return isRed;
-	}
-
+	/**
+	 * The Field class shows a scaled image of the 2019 game field which is rotated
+	 * depending on which alliance you are on, so that the robot always starts at
+	 * the bottom.
+	 */
 	public Field() {
 		setSize(500, 700);
 		t = Toolkit.getDefaultToolkit();
@@ -39,7 +40,7 @@ public class Field extends JComponent {
 		Graphics2D g2 = (Graphics2D) g;
 
 		AffineTransform back = g2.getTransform();
-		if (RobotPosition.getAlliance().getBoolean(false)) { // See if we are on the red alliance.
+		if (RobotPosition.getAlliance().getBoolean(isRed)) { // See if we are on the red alliance.
 			g2.setTransform(a);
 		}
 		g2.drawImage(field, 0, 0, this);

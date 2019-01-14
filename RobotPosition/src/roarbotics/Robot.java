@@ -27,8 +27,14 @@ public class Robot extends JComponent {
 	private double scaleX = 1;
 	private double scaleY = 1;
 
-	AffineTransform rotate  = AffineTransform.getRotateInstance(Math.toRadians(angle), (int) (x * scaleX + 15), (int) ( y*scaleY + 15));;
+	AffineTransform rotate = AffineTransform.getRotateInstance(Math.toRadians(angle), (int) (x * scaleX + 15),
+			(int) (y * scaleY + 15));;
 
+	/**
+	 * The Robot object is a visual representation of the robot on the field. The
+	 * Robot class displays a picture of a robot (RIP dozer) which moves and rotates
+	 * according to the data received from the robot on the field.
+	 */
 	public Robot() {
 		setSize(30, 30);
 		t = Toolkit.getDefaultToolkit();
@@ -39,44 +45,69 @@ public class Robot extends JComponent {
 		setAngle(angle);
 	}
 
+	/**
+	 * Set the position of the Robot on the field. This does not set the position of
+	 * the robot on the screen, instead these coordinates are scaled place the robot
+	 * in the correct location on the field.
+	 * 
+	 * @param x     New X coordinate of the Robot
+	 * @param y     New Y coordinate of the Robot.
+	 * @param angle Angle in degrees the Robot is facing.
+	 */
 	public void setPos(double x, double y, double angle) {
 		this.x = x;
 		this.y = y;
 		this.angle = angle;
 	}
 
+	/**
+	 * Set the x position of the Robot on the field. This does not set the position
+	 * the the robot on the screen, instead this coordinate is scaled to place the
+	 * robot in the correct location on the field.
+	 * 
+	 * @param x New X coordinate of Robot.
+	 */
 	public void setX(double x) {
 		this.x = x;
 	}
 
+	/**
+	 * Set the y position of the Robot on the field. This does not set the position
+	 * the the robot on the screen, instead this coordinate is scaled to place the
+	 * robot in the correct location on the field.
+	 * 
+	 * @param y New Y coordinate of Robot.
+	 */
 	public void setY(double y) {
 		this.y = y;
 	}
 
+	/**
+	 * Set the angle in degrees that the robot is facing. This value can exceed 360.
+	 * 
+	 * @param angle Angle the Robot is facing.
+	 */
 	public void setAngle(double angle) {
 		this.angle = angle;
 		rotateImage();
 	}
 
-	public double getXPos() {
-		return x;
-	}
-
-	public double getYPos() {
-		return y;
-	}
-
+	/**
+	 * Rotate the image according to the angle given. If the angle is more than 90
+	 * or less than 270, the image is changed the same picture but upside down, so
+	 * dozer is mirrored instead of being upside down. He is still dead though, and
+	 * it is our duty to keep him alive in our hearts and in our minds for years to
+	 * come.
+	 */
 	private void rotateImage() {
-		System.out.println("Running rotateImage");
 		double cappedAngle = angle % 360;
 		if (cappedAngle > 90 && cappedAngle < 270) {
 			print_dozer = flip_dozer;
-			System.out.println("using flip_dozer");
 		} else {
-			System.out.println("using regular dozer");
 			print_dozer = dozer;
 		}
-		rotate = AffineTransform.getRotateInstance(Math.toRadians(angle), (int) (x * scaleX + 15), (int) ( y*scaleY + 15));
+		rotate = AffineTransform.getRotateInstance(Math.toRadians(angle), (int) (x * scaleX + 15),
+				(int) (y * scaleY + 15));
 	}
 
 	public void paint(Graphics g) {
