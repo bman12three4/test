@@ -19,13 +19,25 @@ public class Robot extends JComponent {
 	Image flip_dozer;
 	Image print_dozer = dozer;
 	Toolkit t;
+	
+	private int startX = 175;
+	private int startY = 605;
+	
 
-	private double x = 175;
-	private double y = 605;
+	public void setStartX(int startX) {
+		this.startX = startX;
+	}
+
+	public void setStartY(int startY) {
+		this.startY = startY;
+	}
+
+	double x = 0; //change this back to private
+	private double y = 0;
 	private double angle = 0;
 
-	private double scaleX = 1;
-	private double scaleY = 1;
+	private double scaleX = 62.5;
+	private double scaleY = 42.2;
 
 	AffineTransform rotate = AffineTransform.getRotateInstance(Math.toRadians(angle), (int) (x * scaleX + 15),
 			(int) (y * scaleY + 15));;
@@ -59,27 +71,11 @@ public class Robot extends JComponent {
 		this.y = y;
 		this.angle = angle;
 	}
-
-	/**
-	 * Set the x position of the Robot on the field. This does not set the position
-	 * the the robot on the screen, instead this coordinate is scaled to place the
-	 * robot in the correct location on the field.
-	 * 
-	 * @param x New X coordinate of Robot.
-	 */
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	/**
-	 * Set the y position of the Robot on the field. This does not set the position
-	 * the the robot on the screen, instead this coordinate is scaled to place the
-	 * robot in the correct location on the field.
-	 * 
-	 * @param y New Y coordinate of Robot.
-	 */
-	public void setY(double y) {
-		this.y = y;
+	
+	public void updatePos(double theta, double distance) {
+		this.x = distance * Math.cos(Math.toRadians(theta));
+		this.y = distance * Math.sin(Math.toRadians(theta));
+		this.angle = theta;
 	}
 
 	/**
@@ -120,7 +116,7 @@ public class Robot extends JComponent {
 		g2.fillOval((int) (x * scaleX - 5), (int) (y * scaleY - 5), 40, 40);
 		AffineTransform back = g2.getTransform();
 		g2.setTransform(rotate);
-		g2.drawImage(print_dozer, (int) (x * scaleX), (int) (y * scaleY), this);
+		g2.drawImage(print_dozer, (int) (x * scaleX) + startX, (int) (y * scaleY) + startY, this);
 		g2.setTransform(back);
 	}
 

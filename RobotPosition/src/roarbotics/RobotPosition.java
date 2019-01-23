@@ -16,13 +16,7 @@ public class RobotPosition {
 
 	private JFrame frame;
 
-	NetworkTableEntry xMXPEntry;
-	NetworkTableEntry yMXPEntry;
 	NetworkTableEntry angleMXPEntry;
-
-	NetworkTableEntry xGyroEntry;
-	NetworkTableEntry yGyroEntry;
-	NetworkTableEntry angleGyroEntry;
 
 	NetworkTableEntry xRioEntry;
 	NetworkTableEntry yRioEntry;
@@ -91,13 +85,15 @@ public class RobotPosition {
 	class Position {
 
 		String name;
-		double x;
+		int x;
+		int y;
+		double angle;
 
-		public double getX() {
+		public int getX() {
 			return x;
 		}
 
-		public double getY() {
+		public int getY() {
 			return y;
 		}
 
@@ -105,10 +101,7 @@ public class RobotPosition {
 			return angle;
 		}
 
-		double y;
-		double angle;
-
-		public Position(String name, double x, double y, double angle) {
+		public Position(String name, int x, int y, double angle) {
 			this.name = name;
 			this.x = x;
 			this.y = y;
@@ -197,11 +190,12 @@ public class RobotPosition {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				double x = ((Position) startingPos.getSelectedItem()).x;
-				double y = ((Position) startingPos.getSelectedItem()).y;
+				int x = ((Position) startingPos.getSelectedItem()).x;
+				int y = ((Position) startingPos.getSelectedItem()).y;
 				double angle = ((Position) startingPos.getSelectedItem()).angle;
 
-				robot.setPos(x, y, angle);
+				robot.setStartX(x);
+				robot.setStartY(y);
 
 				frame.repaint();
 				robot.repaint();
@@ -223,58 +217,14 @@ public class RobotPosition {
 		// robot = new Robot();
 		// panel.add(robot);
 
-		/**
-		 * main loop. This runs at 20Hz, the same as NetworkTables. It is possible to go
-		 * faster but it hasn't been done yet. Inside the main loop, all the values are
-		 * gotten from the NetworkTables and sent to the robot object to tell it where
-		 * to go.
-		 */
-		t = new Timer(5, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				/*
-				 * double xMXP = xMXPEntry.getDouble(startX); double yMXP =
-				 * yMXPEntry.getDouble(startY); double angleMXP =
-				 * angleMXPEntry.getDouble(startAngle);
-				 * 
-				 * double xGyro = xGyroEntry.getDouble(0); double yGyro =
-				 * yGyroEntry.getDouble(0); double angleGyro = angleGyroEntry.getDouble(0);
-				 * 
-				 * double xRio = xRioEntry.getDouble(0); double yRio = yRioEntry.getDouble(0);
-				 * 
-				 * double leftEncoder = leftEncoderEntry.getDouble(0); double rightEncoder =
-				 * rightEncoderEntry.getDouble(0);
-				 */
-
-//				robot.setAngle((angleMXP + angleGyro) / 2);
-
-//				robot.setX(xMXP);
-//				robot.setY(yMXP);
-
-//				robot.setLeftEnc(leftEncoder);
-//				robot.setRightEnc(rightEncoder);
-
-				// robot.setAngle(angle++);
-
-				field.repaint();
-				robot.repaint();
-
-			}
-		});
+		
 
 		NetworkTableInstance inst = NetworkTableInstance.getDefault();
 		NetworkTable table = inst.getTable("datatable");
 
-		yMXPEntry = table.getEntry("xMXP");
-		yMXPEntry = table.getEntry("yMXP");
 		angleMXPEntry = table.getEntry("angleMXP");
-		xGyroEntry = table.getEntry("xGyro");
-		yGyroEntry = table.getEntry("yGyro");
 		xRioEntry = table.getEntry("xRio");
 		yRioEntry = table.getEntry("yRio");
-		angleGyroEntry = table.getEntry("angleGyro");
 		leftEncoderEntry = table.getEntry("leftEnc");
 		rightEncoderEntry = table.getEntry("rightEnc");
 
@@ -290,6 +240,31 @@ public class RobotPosition {
 
 		inst.startClientTeam(5482);
 		inst.startDSClient();
+		
+		/**
+		 * main loop. This runs at 20Hz, the same as NetworkTables. It is possible to go
+		 * faster but it hasn't been done yet. Inside the main loop, all the values are
+		 * gotten from the NetworkTables and sent to the robot object to tell it where
+		 * to go.
+		 */
+		t = new Timer(1, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				double theta = angleMXPEntry.getDouble(0);
+				double leftEncoder = leftEncoderEntry.getDouble(0);
+				double rightEncoder = rightEncoderEntry.getDouble(0);
+				
+				double distance = (leftEncoder+rightEncoder)/2;
+				
+				robot.updatePos(theta, distance);
+
+				field.repaint();
+				robot.repaint();
+
+			}
+		});
 
 	}
 
